@@ -1,0 +1,27 @@
+server:
+  port: 8083
+  error:
+    include-message: always
+spring:
+  application:
+    name: showtime-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/showtime_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: 1303122004
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+internal:
+  token: ${INTERNAL_TOKEN:cinema-internal-token-2024}
+
+movie:
+  url: ${MOVIE_URL:http://localhost:8082}
+
+hold:
+  seconds: 1200
