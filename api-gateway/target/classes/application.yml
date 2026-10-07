@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET:cinema-booking-secret-key-2024-must-be-at-least-32-chars}
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5173"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: auth-service
+          uri: ${AUTH_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/auth/**
+        - id: movie-service
+          uri: ${MOVIE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/movies/**
+        - id: showtime-service
+          uri: ${SHOWTIME_URL:http://localhost:8083}
+          predicates:
+            - Path=/api/showtimes/**,/api/cinemas/**,/api/rooms/**
+        - id: booking-service
+          uri: ${BOOKING_URL:http://localhost:8084}
+          predicates:
+            - Path=/api/bookings/**
